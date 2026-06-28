@@ -1,0 +1,215 @@
+Customers table ke tamam records show karo.
+SELECT *  
+FROM Customers;
+Sirf CustomerName show karo.
+SELECT  CustomerName 
+FROM Customers;
+Unique cities show karo.
+SELECT  DISTINCT(City) 
+FROM Customers;
+Karachi ke customers show karo.
+SELECT *  
+FROM Customers 
+WHERE City = 'Karachi';
+Lahore ke customers show karo.
+SELECT *  
+FROM Customers 
+WHERE City = 'Lahore';
+Age 25 se zyada customers show karo.
+SELECT *  
+FROM Customers 
+WHERE Age > 25;
+Customers ko CustomerName ke mutabiq sort karo.
+SELECT *  
+FROM Customers 
+ORDER BY CustomerName ASC;
+Customers ko Age descending me sort karo.
+SELECT *  
+FROM Customers 
+ORDER BY Age DESC;
+Products table ke tamam records show karo.
+SELECT *  
+FROM Products;
+ProductName aur Price show karo.
+SELECT ProductName,Price 
+FROM Products;
+10000 se zyada price wale products show karo.
+SELECT *  
+FROM Products 
+WHERE Price > 10000;
+Sab se mehnga product show karo.
+SELECT MAX(Price) 
+FROM Products;
+Sab se sasta product show karo.
+SELECT MIN(Price) 
+FROM Products;
+Total products count karo.
+SELECT COUNT(ProductID) 
+FROM Products;
+Average product price show karo.
+SELECT AVG(Price) 
+FROM Products;
+Employees table ke tamam records show karo.
+SELECT * 
+FROM Employees;
+60000 se zyada salary wale employees show karo.
+SELECT * 
+FROM employees 
+WHERE Salary > 60000;
+Employees ko salary descending me show karo.
+SELECT * 
+FROM employees 
+ORDER BY Salary DESC ;
+Total employees count karo.
+SELECT COUNT(EmployeeID) 
+FROM  Employees;
+Average salary show karo.
+SELECT AVG(Salary) 
+FROM Employees;
+Jin customers ka naam A se start hota hai show karo.
+SELECT * 
+FROM Customers  
+WHERE CustomerName LIKE 'A%';
+Jin customers ka naam a par end hota hai show karo.
+SELECT * 
+FROM Customers  
+WHERE CustomerName LIKE '%a';
+Karachi ya Lahore ke customers show karo.
+SELECT * 
+FROM Customers  
+WHERE City IN ('Karachi','Lahore');
+Karachi ke ilawa tamam customers show karo.
+SELECT * 
+FROM Customers  
+WHERE City != 'Karachi';
+Age 22 aur 28 ke darmiyan customers show karo.departments.
+SELECT * 
+FROM Customers  
+WHERE Age BETWEEN 22 AND 28;
+Employees jo Karachi me hain aur salary 60000 se zyada hai.
+SELECT * 
+FROM Employees 
+WHERE City = 'Karachi' AND Salary > 60000; 
+Products jinki price 2000 aur 30000 ke darmiyan hai.
+SELECT * 
+FROM Products 
+WHERE Price BETWEEN 2000 AND 30000;
+Customers table ko alias C de kar records show karo.
+SELECT * 
+FROM Customers AS C;
+Employees table ko alias E de kar records show karo.
+SELECT * 
+FROM Employees AS E;
+Har city ke customers count karo.
+SELECT City,COUNT(CustomerID) 
+FROM Customers 
+GROUP BY City;
+Har city ki average salary show karo.
+SELECT City,AVG(Salary) 
+FROM Employees 
+GROUP BY City;
+Har customer ke orders count karo.
+SELECT Customers.CustomerName,COUNT(Orders.OrderID) 
+FROM Customers 
+JOIN Orders 
+ON Customers.CustomerID =  Orders.CustomerID 
+GROUP BY Customers.CustomerName ;
+Total order amount calculate karo.
+SELECT SUM(Amount) 
+FROM Orders;
+Average order amount calculate karo.
+SELECT AVG(Amount) 
+FROM Orders;
+CustomerID 3 ki city update karo.
+UPDATE Customers
+SET City = 'Karachi'
+WHERE CustomerID = 3;
+ProductID 5 delete karo.
+DELETE FROM Products 
+WHERE  ProductID = 5; 
+Naya customer insert karo.
+INSERT INTO Customers 
+VALUES (6,'yasir','Lahore',29);
+Naya product insert karo.
+INSERT INTO Products 
+VALUES (6,'Mouse',30000);
+Salary ke hisab se employees ko ascending order me show karo.
+SELECT * 
+FROM Employees 
+ORDER BY salary ASC;
+Price ke hisab se top 3 products show karo.
+SELECT *  
+FROM Products 
+ORDER BY Price DESC LIMIT 3; 
+Customers aur Orders ka INNER JOIN lagao.
+SELECT * 
+FROM Customers 
+INNER JOIN Orders 
+ON Customers.CustomerID =Orders.CustomerID; 
+Customers aur Orders ka LEFT JOIN lagao.
+SELECT * 
+FROM Customers 
+LEFT JOIN Orders 
+ON Customers.CustomerID =Orders.CustomerID; 
+Customers aur Orders ka RIGHT JOIN lagao.
+SELECT * 
+FROM Customers 
+RIGHT JOIN Orders 
+ON Customers.CustomerID =Orders.CustomerID; 
+Customers aur Orders ka FULL JOIN lagao.
+SELECT * 
+FROM Customers 
+FULL JOIN Orders 
+ON Customers.CustomerID =Orders.CustomerID; 
+Har customer ka naam aur uski total order amount show karo (GROUP BY).
+SELECT Customers.CustomerName,SUM(Orders.Amount) AS Total_Order 
+FROM Customers 
+JOIN Orders 
+ON Customers.CustomerID = Orders.CustomerID 
+GROUP BY Customers.CustomerName; 
+Sirf un customers ko show karo jinki total order amount 2000 se zyada hai (HAVING).
+SELECT Customers.CustomerName,SUM(Orders.Amount) AS Total_Order 
+FROM Customers 
+JOIN Orders 
+ON Customers.CustomerID = Orders.CustomerID 
+GROUP BY Customers.CustomerName 
+HAVING SUM(Orders.Amount) > 2000; 
+Jin customers ne order diya hai unko show karo (EXISTS).
+SELECT * 
+FROM Customers 
+WHERE EXISTS (SELECT * 
+FROM   Orders 
+WHERE Customers.CustomerID = Orders.CustomerID);
+Jin customers ne koi order nahi diya unko show karo (NOT EXISTS).
+SELECT * 
+FROM Customers 
+WHERE NOT EXISTS (SELECT * 
+FROM  Orders 
+WHERE Customers.CustomerID = Orders.CustomerID);
+Orders show karo jinki amount CustomerID = 1  ke kisi bhi order amount se zyada hai (ANY).
+SELECT * 
+FROM  Orders 
+WHERE Amount > ANY (SELECT Amount 
+FROM  Orders WHERE CustomerID = 1);   
+Orders show karo jinki amount CustomerID = 1 ke tamam order amounts se zyada hai (ALL).
+SELECT * 
+FROM  Orders 
+WHERE Amount > ALL (SELECT Amount 
+FROM  Orders WHERE CustomerID = 1); 
+Customers aur Employees ke cities ko UNION se show karo.
+SELECT City FROM Customers
+UNION
+SELECT City FROM Employees;
+Customers aur Employees ke cities ko UNION ALL se show karo.
+SELECT City FROM Customers
+UNION ALL
+SELECT City FROM Employees;
+Har city me kitne employees hain (GROUP BY).
+SELECT City,COUNT(EmployeeName) AS Total_Employees 
+FROM Employees 
+GROUP BY City;
+Har city me 1 se zyada employees wali cities show karo (HAVING).
+SELECT City,COUNT(EmployeeName) AS Total_Employees 
+FROM Employees 
+GROUP BY City 
+HAVING Count(EmployeeName) > 1;
